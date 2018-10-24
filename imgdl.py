@@ -13,19 +13,29 @@ driverPath = "./chromedriver.exe"
 if platform.startswith('linux'):
     driverPath = "./chromedriver"
 	
+totalUndownloadable = 0 #Number of images with downloads disabled/unavailable.
 
 browser = webdriver.Chrome(executable_path=driverPath) #Set the browser to use. 
 
 print "Loading page"
-browser.get('https://flickr.com/photo.gne?id=2177060015') #Navigate to the page by using the link that accepts only photo ids.
+photoID = "2177060015"
+browser.get('https://flickr.com/photo.gne?id='+photoID) #Navigate to the page by using the link that accepts only photo ids.
 
 newurl = browser.current_url #Get the new url. Navigating to the link above will ultimately resolve the url to its 'proper' url.
-newurl = newurl +"/sizes/l" #Append the url with the link to the large (l) download page.
+newurl = newurl +"/sizes/o" #Append the url with the link to the original size (o) download page.
 browser.get(newurl) #Navigate there.
 
-downloadText = "Download the Large 1024 size of this photo" #This is the text on the download link.
+downloadText = "Download the Original size of this photo" #This is the text on the download link.
 
-browser.find_element_by_link_text(downloadText).click() #Click the link. Unless otherwise configured, chrome will save 
-                                                        #this link automatically into the downloads folder.
+try:
+    browser.find_element_by_link_text(downloadText).click() #Click the link. Unless otherwise configured, chrome will save 
+                                                            #this link automatically into the downloads folder.
+except:
+    print "Cannot download image " + photoID                #If the browser is unable to find this link, skip this image and document which id was unavailable.
+    totalUndownloadable = totalUndownloadable + 1
+
+
+#Print statistics regarding undownloadable images.
+print "Could not download " + str(totalUndownloadable) + " images. ("+str((totalUndownloadable/99281)*100)+"%)"
 
 #Todo close the browser with browser.quit(). Doing so here quits the browser before the download is complete.
