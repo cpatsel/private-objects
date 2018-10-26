@@ -21,6 +21,10 @@ print "Loading page"
 
 #--------------------------Read CSV function--------------------------#
 def read_csv(path : "csv file path") -> "dict - id : privacy setting":
+	"""
+	before calling this function.
+	Make sure the category titles and extra lines at the end of the csv file is removed
+	"""
 	#dict - id : privacy setting
 	id_privacy = {}
 	with open(path) as f:
