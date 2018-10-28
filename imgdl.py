@@ -73,5 +73,7 @@ def download_img(ids : "id list", all = False, n = 99):
 #Todo close the browser with browser.quit(). Doing so here quits the browser before the download is complete.
 
 
-ids, id_privacy = read_csv("cleaned.csv")
-download_img(ids)
+
+if __name__ == "__main__":
+	ids, id_privacy = read_csv("cleaned.csv")
+	download_img(ids)
