@@ -1,6 +1,8 @@
 from os import listdir
 from os import system
 from imgdl import read_csv
+import numpy as np
+import pandas as pd
 import itertools
 
 #Gets the id from the filename which has the format: id.txt
@@ -56,3 +58,8 @@ for filename in fileList:
                 elif id_privacy[getID(filename)] == "public":
                     privacy_matrix[i][j] += 1
                     privacy_matrix[j][i] += 1
+                    
+                  
+names = list(object_list.keys())
+df = pd.DataFrame(cooccurrency_matrix, index=names, columns=names)
+df.to_csv('comatrix.csv', index=True, header=True, sep=',')
