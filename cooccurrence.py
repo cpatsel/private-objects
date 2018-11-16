@@ -1,6 +1,8 @@
 from os import listdir
 from os import system
 from imgdl import read_csv
+import numpy as np
+import pandas as pd
 import itertools
 
 #Gets the id from the filename which has the format: id.txt
@@ -25,27 +27,28 @@ object1: xx%
 object2: xx%
 ...
 """
-#read each result file and extract objects, then link each object to its privacy setting
-i = 0
+
+#assign each object an index
+i = 0 #index of objects
 for filename in fileList:
     with open("results/" + filename) as r_f:
         for line in r_f:
             if line[0] != '.':
                 if (line.split(':')[0]) not in object_list:
-                    i += 1
                     object_list[line.split(':')[0]] = i
-
+                    i += 1
 
 cooccurrency_matrix = [[ x * 0 for x in range(i)] for y in range(i)]
 privacy_matrix = [[ x * 0 for x in range(i)] for y in range(i)]
 
 for filename in fileList:
     with open("results/" + filename) as r_f:
-        objects = []
+        #collect all object indexes in this image, remove duplicates
+        objects = set()
         for line in r_f:
             if line[0] != '.':
                 # line.split(':')[0] is the object string
-                objects.append(object_list[line.split(':')[0]])
+                objects.add(object_list[line.split(':')[0]])
         if len(objects) > 1:
             for i, j in itertools.combinations(objects, 2):
                 cooccurrency_matrix[i][j] += 1
@@ -56,3 +59,7 @@ for filename in fileList:
                 elif id_privacy[getID(filename)] == "public":
                     privacy_matrix[i][j] += 1
                     privacy_matrix[j][i] += 1
+                  
+names = list(object_list.keys())
+df = pd.DataFrame(cooccurrency_matrix, index=names, columns=names)
+df.to_csv('comatrix.csv', index=True, header=True, sep=',')
