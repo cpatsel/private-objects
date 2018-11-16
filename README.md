@@ -4,6 +4,8 @@ imgdl.py requires selenium:
 
 `` pip install selenium ``
 
+cooccurrence.py requires pandas
+`` pip install pandas ``
 
 feeder.py should be placed in the folder containing the darknet program. By default it searches for images in a folder named 'train'
 

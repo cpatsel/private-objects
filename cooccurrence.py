@@ -59,7 +59,6 @@ for filename in fileList:
                 elif id_privacy[getID(filename)] == "public":
                     privacy_matrix[i][j] += 1
                     privacy_matrix[j][i] += 1
-                  
 names = list(object_list.keys())
 df = pd.DataFrame(cooccurrency_matrix, index=names, columns=names)
 df.to_csv('comatrix.csv', index=True, header=True, sep=',')
