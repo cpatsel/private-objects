@@ -76,4 +76,6 @@ def download_img(ids : "id list", all = False, n = 99):
 
 if __name__ == "__main__":
 	ids, id_privacy = read_csv("cleaned.csv")
-	download_img(ids)
+	for k in id:
+		print(k + '\n')
+	#download_img(ids)
