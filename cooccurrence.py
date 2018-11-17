@@ -67,7 +67,6 @@ for filename in fileList:
                 elif id_privacy[getID(filename)] == "public":
                     privacy_matrix[i][j] += 1
                     privacy_matrix[j][i] += 1
-
 #total number of images
 n = len(fileList)
 
@@ -85,9 +84,9 @@ for i in range( len(cooccurrency_socre_matrix) ):
             cooccurrency_socre_matrix[i][j] = p_ci_cj * math.log( p_ci_cj / (p_ci + p_cj) )
 
 names = list(object_list.keys())
-df = pd.DataFrame(cooccurrency_matrix, index=names, columns=names)
-df.to_csv('comatrix.csv', index=True, header=True, sep=',')
-
-names = list(object_list.keys())
 df = pd.DataFrame(cooccurrency_socre_matrix, index=names, columns=names)
 df.to_csv('cooccurrency_socre.csv', index=True, header=True, sep=',')
+
+names = list(object_list.keys())
+df = pd.DataFrame(cooccurrency_matrix, index=names, columns=names)
+df.to_csv('comatrix.csv', index=True, header=True, sep=',')
