@@ -90,3 +90,7 @@ df.to_csv('cooccurrency_socre.csv', index=True, header=True, sep=',')
 names = list(object_list.keys())
 df = pd.DataFrame(cooccurrency_matrix, index=names, columns=names)
 df.to_csv('comatrix.csv', index=True, header=True, sep=',')
+
+names = list(object_list.keys())
+df = pd.DataFrame(privacy_matrix, index=names, columns=names)
+df.to_csv('privacy.csv', index=True, header=True, sep=',')
